@@ -7,17 +7,24 @@ def total_salary(path):
         with path.open(encoding="utf-8") as file:
             for line in file:
                 name, salary = line.strip().split(",")
-                salary = int(salary)
+                salary = float(salary)
                 salaries.append(salary)
+
     except FileNotFoundError: 
         print(f"Файл {path} не було знайдено.") 
-        return "?", "?"  
+        return "?", "?" 
+     
+    if not salaries:
+        print("В списку немає зарплат.")
+        return 0.0, 0.0
+
     total = sum(salaries)
     average = total / len(salaries)
+
     return total, average
 
 total, average = total_salary("goit-algo-hw-04\\first.txt")
-# print(f"Загальна сума заробітної плати: {total}, Середня заробітна плата: {average}")
+print(f"Загальна сума заробітної плати: {total}, Середня заробітна плата: {average}")
 
 
 
