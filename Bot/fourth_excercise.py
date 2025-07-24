@@ -17,11 +17,15 @@ def load_contacts():
     return contacts
 
 def add_contact(args, contacts):
+    if len(args) != 2:
+        return "Usage: add <name> <phone>"
     name, phone = args
     contacts[name] = phone
-    return f"Contact {name} was succesfully added!"
+    return f"Contact {name} was successfully added!"
 
 def change_contacts_phone(args, contacts):
+    if len(args) != 2:
+                return "Usage: change <name> <new_phone>"
     name, new_phone = args
     if name in contacts:
         contacts[name] = new_phone
@@ -30,6 +34,8 @@ def change_contacts_phone(args, contacts):
         return f"The name {name} was not found"
     
 def show_contacts_phone(args, contacts):
+    if len(args) != 1:
+                return "Usage: phone <name>"
     name = args[0]
     if name in contacts:
        return f"Here is the phone number from {name}: {contacts[name]}" 
@@ -67,25 +73,16 @@ def main():
             print("Hi! How can I help you?")
 
         elif command == "add":
-            if len(args) != 2:
-                print("Usage: add <name> <phone>")
-                continue
             firstly = add_contact(args, contacts)
             save_contacts(contacts)
             print(firstly)
 
         elif command == "change":
-            if len(args) != 2:
-                print("Usage: change <name> <new_phone>")
-                continue
             changed = change_contacts_phone(args, contacts)
             save_contacts(contacts)
             print(changed)
 
         elif command == "phone":
-            if len(args) != 1:
-                print("Usage: phone <name>")
-                continue
             phone = show_contacts_phone(args, contacts)
             print(phone)
         
