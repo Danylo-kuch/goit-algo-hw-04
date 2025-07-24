@@ -3,6 +3,19 @@ def parse_input(user_input):
     cmd = cmd.strip().lower()
     return cmd, *args
 
+def load_contacts():
+    contacts = {}
+    path = "goit-algo-hw-04\\Bot\\contacts.txt"
+    try:
+        with open(path, "r") as f:
+            for line in f:
+                if ":" in line:
+                    name, phone = line.strip().split(":", 1)
+                    contacts[name.strip()] = phone.strip()
+    except FileNotFoundError:
+        return contacts
+    return contacts
+
 def add_contact(args, contacts):
     name, phone = args
     contacts[name] = phone
@@ -27,11 +40,11 @@ def show_all_contacts():
     with open("goit-algo-hw-04\\Bot\\contacts.txt", "r") as f:
         lines = f.readlines()
         if not lines:
-            print("No contacts found.")
+            return "No contacts found."
         else:
-            print("All contacts:")
-            for line in lines:
-                print(line.strip())
+            result = "All contacts:\n"
+            result += "\n".join(line.strip() for line in lines)
+            return result
 
 def save_contacts(contacts):
     with open("goit-algo-hw-04\\Bot\\contacts.txt", "w") as f:
@@ -40,7 +53,7 @@ def save_contacts(contacts):
 
 
 def main():
-    contacts = {}
+    contacts = load_contacts()
     print("Welcome to the assistant BOT created by Danylo Kucherenko!")
     while True:
         user_input = input("Enter the command: ")
@@ -77,7 +90,8 @@ def main():
             print(phone)
         
         elif command == "all":
-            show_all_contacts()
+            result = show_all_contacts()
+            print(result)
 
 
         else:
